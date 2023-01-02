@@ -1,9 +1,16 @@
 
 import InputBox from "../components/input";
-function HomePage() {
+import Nav from "../components/navbar"
+import { signIn, signOut, useSession, } from 'next-auth/react';
+
+export default function SignIn() {
   return (
-    <InputBox />
-  )
+    <p>
+    <Nav />
+      <InputBox />
+    </p>
+  );
 }
 
-export default HomePage
+
+
