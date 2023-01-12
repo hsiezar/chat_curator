@@ -3,8 +3,13 @@ const qs = require('qs')
 import { useState, ChangeEvent, MouseEvent } from 'react';
 import { useSession } from "next-auth/react"
 import { GpTs } from 'gpts';
+
+
+interface FuncProps { 
+    onChangeValue(arg: string): void,
+  }
  
-export default function InputBox() {
+export default function InputBox(props: FuncProps) {
     const { data: session, status } = useSession()
     const [playlistPrompt, setPlaylistPrompt] = useState<string>('');
     
@@ -15,14 +20,16 @@ export default function InputBox() {
       }
     
     async function handlePlaylistCreation(event: MouseEvent) {
-    event.preventDefault();
-    const brain = new GpTs("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");
-    const thoughts = await brain.completion({
-        engineId: "text-davinci-003",
-        max_tokens: 500,
-        prompt: playlistPrompt,
-    });
-    console.log(thoughts.choices[0].text);
+        event.preventDefault();
+        const brain = new GpTs("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");
+        setPlaylistPrompt(playlistPrompt + " .In JSON format.")
+        const thoughts = await brain.completion({
+            engineId: "text-davinci-003",
+            max_tokens: 500,
+            prompt: playlistPrompt,
+        });
+        props.onChangeValue(thoughts.choices[0].text);
+        console.log(thoughts.choices[0].text);
     }
     return (
     <div className="mb-6">
