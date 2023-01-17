@@ -21,12 +21,11 @@ export default function InputBox(props: FuncProps) {
     
     async function handlePlaylistCreation(event: MouseEvent) {
         event.preventDefault();
-        const brain = new GpTs("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");
-        setPlaylistPrompt(playlistPrompt + " .In JSON format.")
+        const brain = new GpTs("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");
         const thoughts = await brain.completion({
             engineId: "text-davinci-003",
             max_tokens: 500,
-            prompt: playlistPrompt,
+            prompt: playlistPrompt +  " .In JSON format.",
         });
         props.onChangeValue(thoughts.choices[0].text);
         console.log(thoughts.choices[0].text);
